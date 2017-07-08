@@ -1,0 +1,13 @@
+---
+# tasks file for bigip_command
+- name: run multiple commands on remote nodes
+  bigip_command:
+    commands:
+      - show sys version
+      - list ltm virtual
+    server: "{{ inventory_hostname }}"
+    user: "{{ username }}"
+    password: "{{ password }}"
+    validate_certs: "false"
+  delegate_to: localhost
+...

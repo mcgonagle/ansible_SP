@@ -1,0 +1,6 @@
+---
+- name: bigip_command playbook
+  hosts: all
+  roles:
+    - bigip_command 
+...
