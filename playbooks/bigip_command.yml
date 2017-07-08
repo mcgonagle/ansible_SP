@@ -1,6 +1,7 @@
 ---
 - name: bigip_command playbook
   hosts: all
+  gather_facts: False
   roles:
     - bigip_command 
 ...
