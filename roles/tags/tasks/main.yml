@@ -1,0 +1,10 @@
+---
+# tasks file for tags
+
+- include: bigip_node/add_node.yml
+  vars:
+      - host: "10.0.2.167"
+      - name: "member1"
+      - monitor: "/Common/icmp"
+  tags: "add_node"
+...
