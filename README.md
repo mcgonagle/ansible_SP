@@ -100,7 +100,7 @@ Includes the BigIP Modules and distributes them for use.
 5. Tags
 6. Roles
 ```
-ansible-galaxy init roles
+ansible-galaxy init role1
 ```
 ---
 
