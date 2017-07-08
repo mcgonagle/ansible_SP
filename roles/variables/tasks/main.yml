@@ -5,9 +5,6 @@
     msg: "{{ defaults_var }}"
 
 - debug: 
-    msg: "{{ vars_var }}"
-
-- debug: 
     msg: "{{ hosts_vars_var }}"
 
 - debug: 
@@ -17,4 +14,9 @@
     msg: "{{ playbook_var }}"
 
 - debug: 
+    msg: "{{ vars_var }}"
+
+- debug: 
     msg: "{{ extra_var }}"
+
+...

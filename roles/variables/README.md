@@ -13,7 +13,7 @@ We have six places to put a variable in the Ansible best practices MVP. In order
 * group_vars
 * playbooks
 * role vars
-* include statements
+* include vars
 * extra vars passed in at the command line 
 
 Print Variables - Debug Statement
@@ -28,5 +28,5 @@ Run the ansible-playbook Command to Print the Variables
 ------------
 
 ```
-ansible-playbook playbooks/variables.yml -u admin --key-file=/tom/.ssh/id_rsa_terraform --ask-vault-pass -e @password.yml -vvv -e extra_var="This_is_an_extra_variable"
+ansible-playbook playbooks/variables.yml --ask-vault-pass -e @password.yml -vvv -e extra_var="This_is_an_extra_variable"
 ```
