@@ -1,3 +1,4 @@
 ---
 hosts_vars_var: "This is the hosts_vars variable"
+defaults_var: "This is the role defaults variable being set within the host vars"
 ...
