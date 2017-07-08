@@ -1,0 +1,3 @@
+---
+group_vars_var: "This is the group_vars variable"
+...

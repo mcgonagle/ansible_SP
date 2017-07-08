@@ -1,0 +1,4 @@
+---
+# vars file for variables
+
+vars_var: "This is the role vars variable"

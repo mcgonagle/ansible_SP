@@ -1,0 +1,3 @@
+---
+hosts_vars_var: "This is the hosts_vars variable"
+...

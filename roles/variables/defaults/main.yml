@@ -1,0 +1,3 @@
+---
+# defaults file for variables
+defaults_var: "This is the role defaults variable"

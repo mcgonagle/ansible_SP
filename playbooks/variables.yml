@@ -1,0 +1,8 @@
+---
+- name: variables playbook
+  hosts: all
+  vars:
+    playbook_var: "This is a playbook variable"
+  roles:
+    - variables 
+...
