@@ -2,10 +2,12 @@
 ## Lab Exercises
 
 1. Demo Enviroment
-2. BIG-IP Command
-3. Managing Variables
-4. Templating and Facts
-5. Tags
+  * [Onboarding](roles/onboarding)
+  * [Operations](roles/operations)
+2. [BIG-IP Command](roles/bigip_command)
+3. [Managing Variables](roles/variables)
+4. [Templating and Facts](roles/custom_facts)
+5. [Tags](roles/tags)
 6. Roles
 ```
 ansible-galaxy init role1
