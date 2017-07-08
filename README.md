@@ -91,6 +91,7 @@ Includes the BigIP Modules and distributes them for use.
 ## Infrastructure as Code Principles, Practices and Patterns
 [Infrastructure as Code Benefits](docs/IAC.md)
 
+---
 ## Lab Exercises
 1. Demo Enviroment
 2. BIG-IP Command
@@ -101,6 +102,7 @@ Includes the BigIP Modules and distributes them for use.
 ```
 ansible-galaxy init roles
 ```
+---
 
 ## License
 ### Apache V2.0
