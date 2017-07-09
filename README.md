@@ -1,16 +1,24 @@
-## Lab Exercises
+# Lab Exercises
 
 1. [ansible.cfg](ansible.cfg)
+2. [hosts](hosts)
+  1. Groups - It is suggested that you define groups based on purpose of the host (roles) and also geography or datacenter location
+  2. host_vars
+  3. group_vars
+3. ansible-vault
+4. run_ansible.sh helper script
+5. [playbooks](playbooks)
+6. [roles](roles)
+7. [BIG-IP Command](roles/bigip_command)
+8.
+9. [Managing Variables](roles/variables)
+10. Demo Enviroment
+  1. [Onboarding](roles/onboarding)
+  2. [Operations](roles/operations)
+11. [Templating and Facts](roles/custom_facts)
+12. [Tags](roles/tags)
 
 
-1. [BIG-IP Command](roles/bigip_command)
-2. Demo Enviroment
-  * [Onboarding](roles/onboarding)
-  * [Operations](roles/operations)
-3. [Managing Variables](roles/variables)
-4. [Templating and Facts](roles/custom_facts)
-5. [Tags](roles/tags)
-6. Roles
 When you start to think about it – tasks, handlers, variables, and so on – begin to form larger concepts. You start to think about modeling what something is, rather than how to make something look like something. It’s no longer “apply this handful of THINGS to these hosts”, you say “these hosts are dbservers” or “these hosts are webservers”. In programming, we might call that “encapsulating” how things work. For instance, you can drive a car without knowing how the engine works.
 
 Roles in Ansible build on the idea of include files and combine them to form clean, reusable abstractions – they allow you to focus more on the big picture and only dive down into the details when needed.
@@ -83,7 +91,7 @@ sudo docker run -p 8080:80 -p 2222:22 --rm -it -v /home/ubuntu/user_repos.json:/
 ```
 
 ## Running the Ansible Code
-This Ansible code base comes with a shell helper script that runs the playbooks. 
+This Ansible code base comes with a shell helper script that runs the playbooks.
 ```
 $ANSIBLE_HOME_DIRECTORY/run_ansible.sh --all
 $ANSIBLE_HOME_DIRECTORY/run_ansible.sh --onboarding
@@ -96,7 +104,7 @@ $ANSIBLE_HOME_DIRECTORY/run_ansible.sh --teardown
 [Ansible 2.x Order of Variable Precedence](docs/PRECEDENCE.md)
 
 ## Ansible Vault
-This code base leverages the ansible vault tool and includes an encrypted password protected file. 
+This code base leverages the ansible vault tool and includes an encrypted password protected file.
 To edit the username and password run:
 ```
 ansible-vault edit password.yml
@@ -106,7 +114,7 @@ The password for the password file is *password*
 ## Ansible Roles
 This ansible repository is organized into roles. Roles are collections of templates, files, tasks,
 and variables. Tasks are organized based on the particular module they are implementing. For example,
-the bigip_device_ntp module is a subdirectory under the onboarding role and has a task 
+the bigip_device_ntp module is a subdirectory under the onboarding role and has a task
 set_ntp.yml (*roles/tasks/bigip_device_ntp/set_ntp.yml*).
 
 ## Ansible Playbooks
@@ -121,7 +129,7 @@ $ANSIBLE_HOME_DIRECTORY/playbooks/today.yml
 ```
 
 ## Ansible Library
-Includes the BigIP Modules and distributes them for use. 
+Includes the BigIP Modules and distributes them for use.
 
 [F5 Network's Ansible Modules](https://github.com/F5Networks/f5-ansible/tree/devel/library)
 
