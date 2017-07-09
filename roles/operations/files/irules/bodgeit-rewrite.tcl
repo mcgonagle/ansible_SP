@@ -1,5 +1,5 @@
 when HTTP_REQUEST {
-	if {[HTTP::path] eq "/"} {
-    		HTTP::uri "/bodgeit"
+	if { [HTTP::uri] starts_with "/broken" } {
+		HTTP::redirect "http://isitthef5.com"
 	}
 }
