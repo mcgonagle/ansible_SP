@@ -243,7 +243,7 @@ except ImportError:
     HAS_F5SDK = False
 
 try:
-    from netaddr import IPNetwork, AddrFormatError
+    from netaddr import IPNetwork, AddrFormatError, IPAddress
     HAS_NETADDR = True
 except ImportError:
     HAS_NETADDR = False
@@ -270,8 +270,6 @@ class BigIpSelfIp(object):
                                   port=kwargs['server_port'])
 
     def present(self):
-        changed = False
-
         if self.exists():
             changed = self.update()
         else:
@@ -311,7 +309,6 @@ class BigIpSelfIp(object):
         if hasattr(r, 'address'):
             p['route_domain'] = str(None)
             if '%' in r.address:
-                ipaddr = []
                 ipaddr = r.address.split('%', 1)
                 rdmask = ipaddr[1].split('/', 1)
                 r.address = "%s/%s" % (ipaddr[0], rdmask[1])
@@ -435,10 +432,19 @@ class BigIpSelfIp(object):
         vlan = self.params['vlan']
         route_domain = self.params['route_domain']
 
-        if address is not None and address != current['address']:
-            raise F5ModuleError(
-                'Self IP addresses cannot be updated'
-            )
+        # This is necessary to compress IPv6 addresses so they match
+        # the format provided by the F5's API
+        if address is not None:
+            try:
+                address = str(IPAddress(address))
+            except AddrFormatError:
+                raise F5ModuleError(
+                    'The address provided is not a valid IP address'
+                )
+            if address != current['address']:
+                raise F5ModuleError(
+                    'Self IP addresses cannot be updated'
+                )
 
         if netmask is not None:
             # I ignore the address value here even if they provide it because

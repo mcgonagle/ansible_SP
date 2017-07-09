@@ -44,7 +44,7 @@ set cc=
 {
   "repos": [
     {
-      "name":"mcgonagle-ansible_SP",
+      "name":"ansible_SP",
       "repo":"https://github.com/mcgonagle/ansible_SP.git",
       "branch":"master",
       "skip":false,
