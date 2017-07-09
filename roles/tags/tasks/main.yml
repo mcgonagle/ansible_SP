@@ -7,4 +7,10 @@
       - name: "member1"
       - monitor: "/Common/icmp"
   tags: "add_node"
+
+- include: bigip_node/add_node.yml
+  vars:
+      - host: "10.0.2.168"
+      - name: "member2"
+      - monitor: "/Common/icmp"
 ...
