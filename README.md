@@ -3,10 +3,10 @@
 1. [ansible.cfg](ansible.cfg)
 2. [hosts](hosts)
   1. Groups - It is suggested that you define groups based on purpose of the host (roles) and also geography or datacenter location
-  2. host_vars
-  3. group_vars
-3. ansible-vault
-4. run_ansible.sh helper script
+  2. [host_vars](host_vars)
+  3. [group_vars](group_vars)
+3. ansible-vault - [password.yml](password.yml)
+4. [run_ansible.sh](run_ansible.sh) helper script
 5. [playbooks](playbooks)
 6. [roles](roles)
 7. [BIG-IP Command](roles/bigip_command)
