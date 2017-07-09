@@ -13,11 +13,12 @@
 6. [playbooks](playbooks)
 7. [roles](roles)
 8. [BIG-IP Command](roles/bigip_command)
-9. [Managing Variables](roles/variables)
-10. Demo Enviroment
+9. [handlers](roles/handlers)
+10. [Managing Variables](roles/variables)
+11. Demo Enviroment
   * [Onboarding](roles/onboarding)
   * [Operations](roles/operations)
-11. [Templating and Facts](roles/custom_facts)
-12. [Tags](roles/tags)
-13. [ansible galaxy](https://galaxy.ansible.com/)
-14. [ansible tower](https://www.ansible.com/tower)
+12. [Templating and Facts](roles/custom_facts)
+13. [Tags](roles/tags)
+14. [ansible galaxy](https://galaxy.ansible.com/)
+15. [ansible tower](https://www.ansible.com/tower)
