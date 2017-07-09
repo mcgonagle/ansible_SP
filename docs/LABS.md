@@ -6,7 +6,7 @@
   * [host_vars](../host_vars)
   * [group_vars](../group_vars)
 3. ansible-vault - [password.yml](../password.yml)
-4. [library](library)
+4. [library](../library)
   * ``` ansible-doc -M library bigip_node ```
   * [ReadtheDocs](https://f5-ansible.readthedocs.io/en/devel/modules/list_of_all_modules.html)
 5. [run_ansible.sh](../run_ansible.sh) helper script
