@@ -28,5 +28,5 @@ Run the ansible-playbook Command to Print the Variables
 ------------
 
 ```
-ansible-playbook playbooks/variables.yml --ask-vault-pass -e @password.yml -vvv -e extra_var="This_is_an_extra_variable"
+ansible-playbook playbooks/variables.yml -vvv --e extra_var="extra_var"
 ```
