@@ -1,4 +1,3 @@
----
 ## Lab Exercises
 
 1. [ansible.cfg](ansible.cfg)
@@ -35,7 +34,6 @@ Role default variables allow you to set default variables for included or depend
 ```
 ansible-galaxy init role1
 ```
----
 
 ## Installing Ansible
 
