@@ -18,20 +18,20 @@
         mode: 0755
 
     - name: "Insert domain custom fact"
-      copy: 
-        src: files/domain.fact
+      template: 
+        src: templates/domain.fact.j2
         dest: /etc/ansible/facts.d/domain.fact
         mode: 0755
 
     - name: "Insert product custom fact"
-      copy: 
-        src: files/product.fact
+      template: 
+        src: templates/product.fact.j2
         dest: /etc/ansible/facts.d/product.fact
         mode: 0755
 
     - name: "Insert role custom fact"
-      copy: 
-        src: files/role.fact
+      template: 
+        src: templates/role.fact.j2
         dest: /etc/ansible/facts.d/role.fact
         mode: 0755
 

@@ -1,4 +1,0 @@
----
-# defaults file for custom_facts
-product: "devops"
-role: "bigip"
