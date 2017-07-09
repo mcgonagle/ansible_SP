@@ -3,6 +3,27 @@ Variables Lab
 
 One of the trickier aspects of Ansible is variable precedence. This lab is meant to introduce variable precedence and demonstrate where to put variables in the MVP, why we put them there, and when to put a particular varialbe in a particular spot.
 
+
+What Makes a Good Variable Name
+------------
+Variable names should be letters, numbers, and underscores. Variables should always start with a letter.
+*foo-port*, *foo port*, *foo.port* and *12* are not valid variable names.
+
+
+YAML also supports dictionaries which map keys to values. For instance:
+
+```
+foo:
+  field1: one
+  field2: two
+```
+You can then reference a specific field in the dictionary using either bracket notation or dot notation:
+
+```
+foo['field1']
+foo.field1
+```
+
 Variable Precedence
 ------------
 
