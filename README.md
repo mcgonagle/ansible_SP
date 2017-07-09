@@ -2,9 +2,9 @@
 
 1. [ansible.cfg](ansible.cfg)
 2. [hosts](hosts)
-  1. Groups - It is suggested that you define groups based on purpose of the host (roles) and also geography or datacenter location
-  2. [host_vars](host_vars)
-  3. [group_vars](group_vars)
+  * Groups - It is suggested that you define groups based on purpose of the host (roles) and also geography or datacenter location
+  * [host_vars](host_vars)
+  * [group_vars](group_vars)
 3. ansible-vault - [password.yml](password.yml)
 4. [run_ansible.sh](run_ansible.sh) helper script
 5. [playbooks](playbooks)
@@ -13,8 +13,8 @@
 8.
 9. [Managing Variables](roles/variables)
 10. Demo Enviroment
-  1. [Onboarding](roles/onboarding)
-  2. [Operations](roles/operations)
+  * [Onboarding](roles/onboarding)
+  * [Operations](roles/operations)
 11. [Templating and Facts](roles/custom_facts)
 12. [Tags](roles/tags)
 
