@@ -29,3 +29,5 @@ ansible-playbook playbooks/bigip_command.yml --ask-vault-pass -e @password.yml -
 
 Move the commands into the role default/main.yml file
 ------------
+Move the "show sys version" and "list ltm virtual" commands into the default/main.yml variable file. 
+Change the commands so that they are now variables.
