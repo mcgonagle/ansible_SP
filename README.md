@@ -1,7 +1,16 @@
 ## Infrastructure as Code Principles, Practices and Patterns
 [Infrastructure as Code Benefits](docs/IAC.md)
 
-##Labs
+## Ansible - Simple, Powerful, and Agentless
+The [desgin goals](http://cdn2.hubspot.net/hub/330046/file-480366556-pdf/pdf_content/Ansible_in_Depth.pdf?t=1390852822000) of ansible are -
+
+* Minimal in nature.
+* Consistent.
+* Secure. Ansible does not deploy agents to nodes.
+* Highly reliable. When carefully written, an Ansible playbook can be idempotent, in order to prevent unexpected side-effects on the managed systems.
+* Low learning curve. Playbooks use an easy and descriptive language based on YAML and Jinja2 templates.
+
+## Labs
 [Labs](docs/LABS.md)
 
 ## Installing Ansible
