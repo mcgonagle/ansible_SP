@@ -19,7 +19,7 @@
   vars:
     - host: "Lamp"
     - pool: "Lamp_pl"
-    - port: "80"
+    - port: "8081"
   when: state == "present"
 
 - include: bigip_irule/manage_irule.yml
