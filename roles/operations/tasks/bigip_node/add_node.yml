@@ -8,8 +8,6 @@
     name: "{{ name }}"
     validate_certs: "false"
     state: "{{ state }}"
-    availability_requirement: "all"
-    quorum: "1"
     monitors:
       - "{{ monitor }}"
   delegate_to: localhost
