@@ -8,7 +8,7 @@
     name: "{{ name }}"
     validate_certs: "false"
     state: "{{ state }}"
-    availability_requirement: "all"
+    availability_requirement: "at_least"
     quorum: "1"
     monitors:
       - "{{ monitor }}"
