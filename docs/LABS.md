@@ -10,15 +10,15 @@
   * ``` ansible-doc -M library bigip_node ```
   * [ReadtheDocs](https://f5-ansible.readthedocs.io/en/devel/modules/list_of_all_modules.html)
 5. [run_ansible.sh](../run_ansible.sh) helper script
-12. Demo Enviroment
+6. Demo Enviroment
   * [Onboarding](../roles/onboarding)
   * [Operations](../roles/operations)
-6. [playbooks](../playbooks)
+7. [playbooks](../playbooks)
 8. [roles](../roles)
-7. [Managing Variables](../roles/variables)
-9. [BIG-IP Command](../roles/bigip_command)
-10. [Managing Variables](../roles/variables)
-11. [handlers](../roles/handlers)
+9. [Managing Variables](../roles/variables)
+10. [BIG-IP Command](../roles/bigip_command)
+11. [Managing Variables](../roles/variables)
+12. [handlers](../roles/handlers)
 13. [Templating and Facts](../roles/custom_facts)
 14. [Tags](../roles/tags)
 15. [ansible galaxy](https://galaxy.ansible.com/)
