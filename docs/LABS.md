@@ -1,4 +1,4 @@
-# Lab Exercises
+#Lab Exercises
 
 1. [ansible.cfg](../ansible.cfg)
 2. [hosts](../hosts)
@@ -18,8 +18,6 @@
 9. [Managing Variables](../roles/variables)
 10. [BIG-IP Command](../roles/bigip_command)
 11. [Managing Variables](../roles/variables)
-12. [handlers](../roles/handlers)
 13. [Templating and Facts](../roles/custom_facts)
-14. [Tags](../roles/tags)
 15. [ansible galaxy](https://galaxy.ansible.com/)
 16. [ansible tower](https://www.ansible.com/tower)
