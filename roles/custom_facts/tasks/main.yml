@@ -14,7 +14,13 @@
     - name: "Insert version custom fact"
       copy: 
         src: files/version.fact
-        dest: /etc/ansible/facts.d/datacenter.fact
+        dest: /etc/ansible/facts.d/version.fact
+        mode: 0755
+
+    - name: "Insert platform custom fact"
+      copy: 
+        src: files/platform.fact
+        dest: /etc/ansible/facts.d/platform.fact
         mode: 0755
 
     - name: "Insert zone custom fact"
@@ -74,3 +80,7 @@
     - name: version fact 
       debug:
         msg: "{{ ansible_local.version.name }}"
+
+    - name: platform fact 
+      debug:
+        msg: "{{ ansible_local.platform.name }}"

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PLATFORM=`tmsh show sys license| grep Platform| awk '{ print $3 }'
+
+cat <<EOF
+{
+    "name" : "$PLATFORM"
+}
+EOF
