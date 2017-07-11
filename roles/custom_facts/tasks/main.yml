@@ -11,6 +11,12 @@
         dest: /etc/ansible/facts.d/datacenter.fact
         mode: 0755
 
+    - name: "Insert version custom fact"
+      copy: 
+        src: files/version.fact
+        dest: /etc/ansible/facts.d/datacenter.fact
+        mode: 0755
+
     - name: "Insert zone custom fact"
       copy: 
         src: files/zone.fact
@@ -64,3 +70,7 @@
     - name: role fact 
       debug:
         msg: "{{ ansible_local.role.name }}"
+
+    - name: version fact 
+      debug:
+        msg: "{{ ansible_local.version.name }}"
