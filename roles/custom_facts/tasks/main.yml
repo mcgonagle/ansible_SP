@@ -13,8 +13,8 @@
 
     - name: "Insert version custom fact"
       copy: 
-        src: files/version.fact
-        dest: /etc/ansible/facts.d/version.fact
+        src: files/dog.fact
+        dest: /etc/ansible/facts.d/dog.fact
         mode: 0755
 
     - name: "Insert platform custom fact"
