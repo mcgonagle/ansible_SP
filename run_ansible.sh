@@ -9,6 +9,8 @@ while test $# -gt 0; do
                         echo "-a, --all                 run the site playbook"
                         echo "-n, --onboarding          run the onboarding playbook"
                         echo "-o, --operation           run the operation playbook"
+                        echo "-p, --ping                run the ping command"
+                        echo "-s, --setup               run the setup command"
                         echo "-t, --teardown            run the teardown playbook"
                         exit 0
                         ;;
@@ -19,6 +21,22 @@ while test $# -gt 0; do
                         ;;
                 --onboarding*)
                         ansible-playbook playbooks/onboarding.yml --ask-vault-pass -e @password.yml -vvv 
+                        shift
+                        ;;
+                -p)
+                        ansible all -m ping -u admin --key-file=/home/snops/Ansible_SP/misc/id_rsa
+                        shift
+                        ;;
+                --ping)
+                        ansible all -m ping -u admin --key-file=/home/snops/Ansible_SP/misc/id_rsa
+                        shift
+                        ;;
+                -s)
+                        ansible all -m setup -u admin --key-file=/home/snops/Ansible_SP/misc/id_rsa
+                        shift
+                        ;;
+                --setup)
+                        ansible all -m setup -u admin --key-file=/home/snops/Ansible_SP/misc/id_rsa
                         shift
                         ;;
                 -o)
