@@ -7,6 +7,7 @@ while test $# -gt 0; do
                         echo "options:"
                         echo "-h, --help                show brief help"
                         echo "-a, --all                 run the site playbook"
+                        echo "-c, --custom              run the custom_facts playbook"
                         echo "-n, --onboarding          run the onboarding playbook"
                         echo "-o, --operation           run the operation playbook"
                         echo "-p, --ping                run the ping command"
@@ -37,6 +38,14 @@ while test $# -gt 0; do
                         ;;
                 --setup)
                         ansible all -m setup -u admin --key-file=/home/snops/Ansible_SP/misc/id_rsa
+                        shift
+                        ;;
+                -c)
+                        ansible-playbook playbooks/custom_facts.yml -u admin --key-file=/home/snops/Ansible_SP/misc/id_rsa --ask-vault-pass -e @password.yml -vvv
+                        shift
+                        ;;
+                --custom)
+                        ansible-playbook playbooks/custom_facts.yml -u admin --key-file=/home/snops/Ansible_SP/misc/id_rsa --ask-vault-pass -e @password.yml -vvv
                         shift
                         ;;
                 -o)
