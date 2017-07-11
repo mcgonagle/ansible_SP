@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=`tmsh show sys license| grep Version| awk '{ print $3 }'
+VERSION=`tmsh show sys license| grep Version| awk '{ print $3 }'`
 
 cat <<EOF
 {
