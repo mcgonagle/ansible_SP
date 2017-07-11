@@ -79,7 +79,7 @@
 
     - name: version fact 
       debug:
-        msg: "{{ ansible_local.version.name }}"
+        msg: "{{ ansible_local.version2.name }}"
 
     - name: platform fact 
       debug:
