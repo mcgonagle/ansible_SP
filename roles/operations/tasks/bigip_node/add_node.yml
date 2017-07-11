@@ -9,6 +9,6 @@
     validate_certs: "false"
     state: "{{ state }}"
     monitors:
-      - "{{ monitor }}"
+      - "/Common/icmp"
   delegate_to: localhost
 ...
