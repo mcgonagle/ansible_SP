@@ -13,8 +13,8 @@
 6. [playbooks](../playbooks)
 7. [roles](../roles)
 8. [BIG-IP Command](../roles/bigip_command)
-9. [handlers](../roles/handlers)
-10. [Managing Variables](../roles/variables)
+9. [Managing Variables](../roles/variables)
+10. [handlers](../roles/handlers)
 11. Demo Enviroment
   * [Onboarding](../roles/onboarding)
   * [Operations](../roles/operations)
