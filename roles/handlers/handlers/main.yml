@@ -1,5 +1,0 @@
----
-# handlers file for handlers
-- name: restart ntpd
-  service: name=ntpd state=restarted
-...
