@@ -1,9 +1,0 @@
-#!/bin/bash
-
-VERSION=`tmsh show sys license| grep Version| awk '{ print $3 }'`
-
-cat <<EOF
-{
-    "name" : "$VERSION"
-}
-EOF
