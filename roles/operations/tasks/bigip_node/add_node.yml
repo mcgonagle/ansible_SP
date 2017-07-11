@@ -8,7 +8,8 @@
     name: "{{ name }}"
     validate_certs: "false"
     state: "{{ state }}"
+    availabiltiy_requirements: "all"
     monitors:
-      - "/Common/icmp"
+      - "{{ monitor }}"
   delegate_to: localhost
 ...
