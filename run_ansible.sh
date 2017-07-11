@@ -13,6 +13,7 @@ while test $# -gt 0; do
                         echo "-p, --ping                run the ping command"
                         echo "-s, --setup               run the setup command"
                         echo "-t, --teardown            run the teardown playbook"
+                        echo "-v, --variable            run the variable playbook"
                         exit 0
                         ;;
                 -n)
@@ -62,6 +63,14 @@ while test $# -gt 0; do
                         ;;
                 --teardown*)
                         ansible-playbook playbooks/operations.yml --ask-vault-pass -e @password.yml -e state="absent" -vvv 
+                        shift
+                        ;;
+                -v)
+                        ansible-playbook playbooks/variables.yml -vvv -e extra_var="extra_var"
+                        shift
+                        ;;
+                --variables*)
+                        ansible-playbook playbooks/variables.yml -vvv -e extra_var="extra_var"
                         shift
                         ;;
                 -a)
