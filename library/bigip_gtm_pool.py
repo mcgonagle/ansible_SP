@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2017 F5 Networks Inc.
+# Copyright 2016 F5 Networks Inc.
 #
 # This file is part of Ansible
 #
@@ -30,7 +30,7 @@ module: bigip_gtm_pool
 short_description: Manages F5 BIG-IP GTM pools.
 description:
     - Manages F5 BIG-IP GTM pools.
-version_added: "2.4"
+version_added: "2.3"
 options:
   state:
     description:
@@ -48,6 +48,8 @@ options:
   preferred_lb_method:
     description:
       - The load balancing mode that the system tries first.
+    required: False
+    default: None
     choices:
       - round-robin
       - return-to-dns
@@ -71,6 +73,8 @@ options:
     description:
       - The load balancing mode that the system tries if the
         C(preferred_lb_method) is unsuccessful in picking a pool.
+    required: False
+    default: None
     choices:
       - round-robin
       - return-to-dns
@@ -89,6 +93,8 @@ options:
       - The load balancing mode that the system tries if both the
         C(preferred_lb_method) and C(alternate_lb_method)s are unsuccessful
         in picking a pool.
+    required: False
+    default: None
     choices:
       - round-robin
       - return-to-dns
@@ -114,11 +120,12 @@ options:
         directs requests when it cannot use one of its pools to do so.
         Note that the system uses the fallback IP only if you select the
         C(fallback_ip) load balancing method.
+    required: False
+    default: None
   type:
     description:
       - The type of GTM pool that you want to create. On BIG-IP releases
-        prior to version 12, this parameter is not required. On later versions
-        of BIG-IP, this is a required parameter.
+        prior to version 12, this parameter is not supported.
     choices:
       - a
       - aaaa
@@ -132,9 +139,9 @@ options:
     required: True
 notes:
   - Requires the f5-sdk Python package on the host. This is as easy as
-    pip install f5-sdk.
+    pip install f5-sdk
   - Requires the netaddr Python package on the host. This is as easy as
-    pip install netaddr.
+    pip install netaddr
 extends_documentation_fragment: f5
 requirements:
   - f5-sdk
@@ -144,26 +151,10 @@ author:
 '''
 
 RETURN = '''
-preferred_lb_method:
-    description: New preferred load balancing method for the pool.
-    returned: changed
-    type: string
-    sample: "topology"
-alternate_lb_method:
-    description: New alternate load balancing method for the pool.
-    returned: changed
-    type: string
-    sample: "drop-packet"
-fallback_lb_method:
-    description: New fallback load balancing method for the pool.
-    returned: changed
-    type: string
-    sample: "fewest-hops"
-fallback_ip:
-    description: New fallback IP used when load balacing using the C(fallback_ip) method.
-    returned: changed
-    type: string
-    sample: "10.10.10.10"
+changed:
+    description: Denotes if the F5 configuration was updated.
+    returned: always
+    type: bool
 '''
 
 EXAMPLES = '''
@@ -220,7 +211,7 @@ class Parameters(AnsibleF5Parameters):
     ]
     returnables = [
         'preferred_lb_method', 'alternate_lb_method', 'fallback_lb_method',
-        'fallback_ip'
+        'fallback_ip', 'name', 'state'
     ]
     api_attributes = [
         'loadBalancingMode', 'alternateMode', 'fallbackMode', 'verifyMemberAvailability',
@@ -604,17 +595,28 @@ class ArgumentSpec(object):
                 choices=self.states,
             ),
             preferred_lb_method=dict(
+                type='str',
                 choices=self.preferred_lb_methods,
+                default=None
             ),
             fallback_lb_method=dict(
+                type='str',
                 choices=self.fallback_lb_methods,
+                default=None
             ),
             alternate_lb_method=dict(
+                type='str',
                 choices=self.alternate_lb_methods,
+                default=None
             ),
-            fallback_ip=dict(),
+            fallback_ip=dict(
+                type='str',
+                default=None
+            ),
             type=dict(
-                choices=self.types
+                type='str',
+                choices=self.types,
+                default=None
             )
         )
         self.required_if = [

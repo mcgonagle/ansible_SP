@@ -155,15 +155,7 @@ tag:
     sample: 2345
 '''
 
-from ansible.module_utils.f5_utils import (
-    AnsibleF5Client,
-    AnsibleF5Parameters,
-    HAS_F5SDK,
-    F5ModuleError,
-    iControlUnexpectedHTTPError,
-    iteritems,
-    defaultdict
-)
+from ansible.module_utils.f5_utils import *
 
 
 class Parameters(AnsibleF5Parameters):

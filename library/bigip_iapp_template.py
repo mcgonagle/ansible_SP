@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2017 F5 Networks Inc.
+# Copyright 2016 F5 Networks Inc.
 #
 # This file is part of Ansible
 #
@@ -42,7 +42,7 @@ description:
     existing services are changed to consume that new template. As such,
     the ability to update templates in-place requires the C(force) option
     to be used.
-version_added: "2.4"
+version_added: "2.3"
 options:
   force:
     description:
@@ -51,6 +51,8 @@ options:
         using it. This will not update the running service though. Use
         C(bigip_iapp_service) to do that. When C(no), will update the iApp
         only if there are no iApp services using the template.
+    required: False
+    default: None
     choices:
       - yes
       - no
@@ -60,15 +62,20 @@ options:
         is only available when specifying a C(state) of C(absent) and is
         provided as a way to delete templates that you may no longer have
         the source of.
+    required: False
+    default: None
   content:
     description:
       - Sets the contents of an iApp template directly to the specified
         value. This is for simple values, but can be used with lookup
         plugins for anything complex or with formatting. C(content) must
         be provided when creating new templates.
+    required: False
+    default: None
   state:
     description:
       - Whether the iRule should exist or not.
+    required: False
     default: present
     choices:
       - present
@@ -112,7 +119,7 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-# only common fields returned
+
 '''
 
 import re
@@ -129,6 +136,7 @@ from ansible.module_utils.f5_utils import (
     iControlUnexpectedHTTPError
 )
 from f5.utils.iapp_parser import (
+    IappParser,
     NonextantTemplateNameException
 )
 
@@ -149,7 +157,7 @@ class Parameters(AnsibleF5Parameters):
 
     def update(self, params=None):
         if params:
-            for k, v in iteritems(params):
+            for k,v in iteritems(params):
                 if self.api_map is not None and k in self.api_map:
                     map_key = self.api_map[k]
                 else:
@@ -179,7 +187,7 @@ class Parameters(AnsibleF5Parameters):
                 name = self._get_template_name()
                 return name
             except NonextantTemplateNameException:
-                raise F5ModuleError(
+                return F5ModuleError(
                     "No template name was found in the template"
                 )
         return None
@@ -219,13 +227,13 @@ class Parameters(AnsibleF5Parameters):
 
     def _squash_template_name_prefix(self):
         """Removes the template name prefix
-
+        
         The IappParser in the SDK treats the partition prefix as part of
         the iApp's name. This method removes that partition from the name
         in the iApp so that comparisons can be done properly and entries
         can be created properly when using REST.
-
-        :return string
+        
+        :return string 
         """
         pattern = r'sys\s+application\s+template\s+/Common/'
         replace = 'sys application template '
@@ -233,31 +241,22 @@ class Parameters(AnsibleF5Parameters):
 
     def _replace_template_name(self, template):
         """Replaces template name at runtime
-
+        
         To allow us to do the switch-a-roo with temporary templates and
         checksum comparisons, we need to take the template provided to us
         and change its name to a temporary value so that BIG-IP will create
         a clone for us.
-
-        :return string
+        
+        :return string 
         """
         pattern = r'sys\s+application\s+template\s+[^ ]+'
         replace = 'sys application template {0}'.format(self._values['name'])
         return re.sub(pattern, replace, template)
 
     def _get_template_name(self):
-        # There is a bug in the iApp parser in the F5 SDK that prevents us from
-        # using it in all cases to get the name of an iApp. So we'll use this
-        # pattern for now and file a bug with the F5 SDK
-        pattern = r'sys\s+application\s+template\s+(?P<path>\/\w+\/)?(?P<name>[\w.]+)'
-        matches = re.search(pattern, self.content)
-        try:
-            result = matches.group('name')
-        except IndexError:
-            result = None
-        if result:
-            return result
-        raise NonextantTemplateNameException
+        parser = IappParser(self.content)
+        tmpl = parser.parse_template()
+        return tmpl['name']
 
 
 class ModuleManager(object):
@@ -340,12 +339,12 @@ class ModuleManager(object):
 
     def _remove_iapp_checksum(self):
         """Removes the iApp tmplChecksum
-
+        
         This is required for updating in place or else the load command will
         fail with a "AppTemplate ... content does not match the checksum"
         error.
-
-        :return:
+        
+        :return: 
         """
         resource = self.client.api.tm.sys.application.templates.template.load(
             name=self.want.name,
@@ -447,16 +446,25 @@ class ArgumentSpec(object):
     def __init__(self):
         self.supports_check_mode = True
         self.argument_spec = dict(
-            name=dict(),
+            name=dict(
+                required=False,
+                default=None
+            ),
             state=dict(
+                type='str',
                 default='present',
                 choices=['present', 'absent']
             ),
             force=dict(
                 choices=BOOLEANS,
+                required=False,
+                default=None,
                 type='bool'
             ),
-            content=dict()
+            content=dict(
+                required=False,
+                default=None
+            )
         )
         self.f5_product_name = 'bigip'
         self.mutually_exclusive = [

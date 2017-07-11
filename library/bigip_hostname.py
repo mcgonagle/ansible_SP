@@ -35,7 +35,7 @@ options:
   hostname:
     description:
       - Hostname of the BIG-IP host.
-    required: True
+    required: true
 notes:
   - Requires the f5-sdk Python package on the host. This is as easy as pip
     install f5-sdk.
@@ -65,13 +65,7 @@ hostname:
     sample: "big-ip01.internal"
 '''
 
-from ansible.module_utils.f5_utils import (
-    AnsibleF5Client,
-    AnsibleF5Parameters,
-    HAS_F5SDK,
-    F5ModuleError,
-    iControlUnexpectedHTTPError
-)
+from ansible.module_utils.f5_utils import *
 
 
 class Parameters(AnsibleF5Parameters):
@@ -204,7 +198,6 @@ def main():
         client.module.exit_json(**results)
     except F5ModuleError as e:
         client.module.fail_json(msg=str(e))
-
 
 if __name__ == '__main__':
     main()

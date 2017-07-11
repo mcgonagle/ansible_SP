@@ -57,6 +57,7 @@ options:
         type in addition to name, since pool members need different attributes
         depending on the response RDATA they are meant to supply. This value
         is required if you are using BIG-IP versions >= 12.0.0.
+    required: False
     choices:
       - a
       - aaaa
@@ -71,6 +72,7 @@ options:
         is enabled. When C(absent), ensures that the Wide IP has been
         removed. When C(disabled), ensures that the Wide IP exists and is
         disabled.
+    required: False
     default: present
     choices:
       - present
@@ -100,27 +102,12 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-lb_method:
-    description: The new load balancing method used by the wide IP.
-    returned: changed
-    type: string
-    sample: "topology"
-state:
-    description: The new state of the wide IP.
-    returned: changed
-    type: string
-    sample: "disabled"
+
 '''
 
 import re
 
-from ansible.module_utils.f5_utils import (
-    AnsibleF5Client,
-    AnsibleF5Parameters,
-    HAS_F5SDK,
-    F5ModuleError,
-    iControlUnexpectedHTTPError
-)
+from ansible.module_utils.f5_utils import *
 from distutils.version import LooseVersion
 
 
@@ -165,20 +152,24 @@ class Parameters(AnsibleF5Parameters):
             if self._values['__warnings'] is None:
                 self._values['__warnings'] = []
             self._values['__warnings'].append(
-                dict(
-                    msg='The provided lb_method is deprecated',
-                    version='2.4'
-                )
+                [
+                    dict(
+                        msg='The provided lb_method is deprecated',
+                        version='2.4'
+                    )
+                ]
             )
             lb_method = 'global-availability'
         elif lb_method == 'round_robin':
             if self._values['__warnings'] is None:
                 self._values['__warnings'] = []
             self._values['__warnings'].append(
-                dict(
-                    msg='The provided lb_method is deprecated',
-                    version='2.4'
-                )
+                [
+                    dict(
+                        msg='The provided lb_method is deprecated',
+                        version='2.4'
+                    )
+                ]
             )
             lb_method = 'round-robin'
         return lb_method
@@ -269,7 +260,7 @@ class ModuleManager(object):
     def get_manager(self, type):
         if type == 'typed':
             return TypedManager(self.client)
-        elif type == 'untyped':
+        elif type =='untyped':
             return UntypedManager(self.client)
 
     def version_is_less_than_12(self):
@@ -330,15 +321,11 @@ class BaseManager(object):
         changes = self.changes.to_return()
         result.update(**changes)
         result.update(dict(changed=changed))
-        self._announce_deprecations()
+        self._announce_deprecations(result)
         return result
 
-    def _announce_deprecations(self):
-        warnings = []
-        if self.want:
-            warnings += self.want._values.get('__warnings', [])
-        if self.have:
-            warnings += self.have._values.get('__warnings', [])
+    def _announce_deprecations(self, result):
+        warnings = result.pop('__warnings', [])
         for warning in warnings:
             self.client.module.deprecate(
                 msg=warning['msg'],
@@ -354,13 +341,6 @@ class BaseManager(object):
             return self.update()
         else:
             return self.create()
-
-    def create(self):
-        self._set_changed_options()
-        if self.client.check_mode:
-            return True
-        self.create_on_device()
-        return True
 
     def should_update(self):
         result = self._update_changed_options()
@@ -397,6 +377,13 @@ class UntypedManager(BaseManager):
             name=self.want.name,
             partition=self.want.partition
         )
+
+    def create(self):
+        self._set_changed_options()
+        if self.client.check_mode:
+            return True
+        self.create_on_device()
+        return True
 
     def update_on_device(self):
         params = self.want.api_params()
@@ -449,6 +436,12 @@ class TypedManager(BaseManager):
             partition=self.want.partition
         )
         return result
+
+    def create(self):
+        if self.client.check_mode:
+            return True
+        self.create_on_device()
+        return True
 
     def update_on_device(self):
         params = self.want.api_params()
@@ -522,7 +515,7 @@ class ArgumentSpec(object):
                 required=False,
                 default=None,
                 choices=[
-                    'a', 'aaaa', 'cname', 'mx', 'naptr', 'srv'
+                    'a','aaaa','cname','mx','naptr','srv'
                 ]
             ),
             state=dict(
@@ -552,7 +545,6 @@ def main():
         client.module.exit_json(**results)
     except F5ModuleError as e:
         client.module.fail_json(msg=str(e))
-
 
 if __name__ == '__main__':
     main()

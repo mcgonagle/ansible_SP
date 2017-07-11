@@ -89,6 +89,7 @@ RETURN = '''
 
 '''
 
+
 from ansible.module_utils.f5_utils import *
 
 
@@ -209,11 +210,11 @@ class Parameters(AnsibleF5Parameters):
                     "One of the provided tables does not have a name"
                 )
             tmp['name'] = str(name)
-            columns = table.get('columns', None)
+            columns = table.get('columnNames', None)
             if columns:
-                tmp['columns'] = []
+                tmp['columnNames'] = []
                 for column in columns:
-                    tmp['columns'].append(
+                    tmp['columnNames'].append(
                         dict((str(k),str(v)) for k,v in iteritems(column))
                     )
                 # You cannot have rows without columns
@@ -221,6 +222,18 @@ class Parameters(AnsibleF5Parameters):
                 if rows:
                     tmp['rows'] = list(list())
                     for row in rows:
+                        # This looks weird, but iWorkflow puts the "many" rows
+                        # into a single row. The actual payload looks like this
+                        #
+                        # "rows": [
+                        #   [
+                        #     "12.0.1.11",
+                        #     "80"
+                        #   ],
+                        #   [
+                        #     "12.0.1.12"
+                        #   ]
+                        # ]
                         tmp['rows'][0].append([str(x) for x in row])
             description = table.get('description', None)
             if description:

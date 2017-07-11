@@ -47,17 +47,23 @@ options:
         device group has no such failover. When creating a new device group,
         this option will default to C(sync-only). This setting cannot be
         changed once it has been set.
+    required: False
+    default: None
     choices:
       - sync-failover
       - sync-only
   description:
     description:
       - Description of the device group.
+    required: False
+    default: None
   auto_sync:
     description:
       - Indicates whether configuration synchronization occurs manually or
         automatically. When creating a new device group, this option will
         default to C(false). 
+    required: False
+    default: None
     choices:
       - true
       - false
@@ -67,6 +73,8 @@ options:
         will be saved or not. If C(false), only the running configuration
         will be changed on the device(s) being synced to. When creating a
         new device group, this option will default to C(false).
+    required: False
+    default: None
     choices:
       - true
       - false
@@ -83,6 +91,8 @@ options:
         Typically this requires at least one full configuration load to each
         device. When creating a new device group, this option will default
         to C(false).
+    required: False
+    default: None
     choices:
       - true
       - false
@@ -94,12 +104,15 @@ options:
         incremental synchronization operations can reduce the per-device sync/load
         time for configuration changes. This setting is relevant only when
         C(full_sync) is C(false).
+    required: False
+    default: None
 notes:
   - Requires the f5-sdk Python package on the host. This is as easy as pip
     install f5-sdk.
   - This module is primarily used as a component of configuring HA pairs of
     BIG-IP devices.
   - Requires BIG-IP >= 12.1.x.
+  - Requires Ansible >= 2.3.
 requirements:
   - f5-sdk >= 2.2.3
 extends_documentation_fragment: f5
@@ -129,36 +142,7 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-save_on_auto_sync:
-    description: The new save_on_auto_sync value of the device group.
-    returned: changed
-    type: bool
-    sample: true
-full_sync:
-    description: The new full_sync value of the device group.
-    returned: changed
-    type: bool
-    sample: false
-description:
-    description: The new description of the device group.
-    returned: changed
-    type: string
-    sample: "this is a device group"
-type:
-    description: The new type of the device group.
-    returned: changed
-    type: string
-    sample: "sync-failover"
-auto_sync:
-    description: The new auto_sync value of the device group.
-    returned: changed
-    type: bool
-    sample: true
-max_incremental_sync_size:
-    description: The new sync size of the device group
-    returned: changed
-    type: int
-    sample: 1000
+
 '''
 
 from ansible.module_utils.basic import BOOLEANS
@@ -184,8 +168,7 @@ class Parameters(AnsibleF5Parameters):
         'incrementalConfigSyncSizeMax'
     ]
     returnables = [
-        'save_on_auto_sync', 'full_sync', 'description', 'type', 'auto_sync',
-        'max_incremental_sync_size'
+        'save_on_auto_sync', 'full_sync', 'description', 'type', 'auto_sync'
     ]
     updatables = [
         'save_on_auto_sync', 'full_sync', 'description', 'auto_sync',
@@ -257,20 +240,11 @@ class Parameters(AnsibleF5Parameters):
         return result
 
 
-class Changes(Parameters):
-    @property
-    def auto_sync(self):
-        if self._values['auto_sync'] in BOOLEANS_TRUE:
-            return True
-        else:
-            return False
-
-
 class ModuleManager(object):
     def __init__(self, client):
         self.client = client
         self.want = Parameters(self.client.module.params)
-        self.changes = Changes()
+        self.changes = Parameters()
 
     def _set_changed_options(self):
         changed = {}
@@ -278,7 +252,7 @@ class ModuleManager(object):
             if getattr(self.want, key) is not None:
                 changed[key] = getattr(self.want, key)
         if changed:
-            self.changes = Changes(changed)
+            self.changes = Parameters(changed)
 
     def _update_changed_options(self):
         changed = {}
@@ -289,7 +263,7 @@ class ModuleManager(object):
                 if attr1 != attr2:
                     changed[key] = attr1
         if changed:
-            self.changes = Changes(changed)
+            self.changes = Parameters(changed)
             return True
         return False
 

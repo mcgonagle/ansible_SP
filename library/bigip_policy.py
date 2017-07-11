@@ -40,6 +40,8 @@ options:
   description:
     description:
       - The description to attach to the Partition.
+    required: False
+    default: None
   name:
     description:
       - The name of the policy to create.
@@ -50,6 +52,8 @@ options:
         published. When C(state) is C(absent), ensures that the policy is removed,
         even if it is currently drafted. When C(state) is C(draft), ensures that
         the policy exists and is drafted.
+    required: False
+    default: present
     choices:
       - present
       - absent
@@ -59,6 +63,8 @@ options:
       - Specifies the method to determine which actions get executed in the
         case where there are multiple rules that match. When creating new
         policies, the default is C(first).
+    default: None
+    required: False
     choices:
       - first
       - all
@@ -304,7 +310,7 @@ class SimpleTrafficPolicyManager(BaseTrafficPolicyManager):
         if self.client.check_mode:
             return True
 
-        self.create_on_device()
+        self.update_on_device()
         return True
 
     def update(self):
