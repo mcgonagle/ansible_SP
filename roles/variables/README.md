@@ -49,7 +49,7 @@ Run the ansible-playbook Command to Print the Variables
 ------------
 
 ```
-ansible-playbook playbooks/variables.yml -vvv --e extra_var="extra_var"
+ansible-playbook playbooks/variables.yml -vvv -e extra_var="extra_var"
 ```
 
 Directions
