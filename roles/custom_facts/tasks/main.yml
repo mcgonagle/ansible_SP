@@ -23,6 +23,12 @@
         dest: /etc/ansible/facts.d/platform.fact
         mode: 0755
 
+    - name: "Insert registration custom fact"
+      copy: 
+        src: files/registration.fact
+        dest: /etc/ansible/facts.d/registration.fact
+        mode: 0755
+
     - name: "Insert zone custom fact"
       copy: 
         src: files/zone.fact
@@ -84,3 +90,7 @@
     - name: platform fact 
       debug:
         msg: "{{ ansible_local.platform.name }}"
+
+    - name: platform fact 
+      debug:
+        msg: "{{ ansible_local.registration.name }}"
